@@ -20,8 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
-    "commit":"git-cz"
-
+    "commit": "git-cz"
   },
   "lint-staged": {
     "src/**/*.{js,ts,json}": [
@@ -30,9 +29,9 @@
       "git add"
     ]
   },
-  "config":{
-    "commitizen":{
-      "path":"node_modules/cz-conventional-changelog"
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
     }
   },
   "dependencies": {
