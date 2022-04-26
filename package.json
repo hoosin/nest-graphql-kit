@@ -35,8 +35,10 @@
     }
   },
   "dependencies": {
+    "@depyronick/nestjs-clickhouse": "^1.0.15",
     "@nestjs/apollo": "^10.0.2",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "^10.0.2",
     "@nestjs/platform-express": "^8.0.0",

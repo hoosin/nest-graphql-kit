@@ -4,21 +4,8 @@
 
 directive @upper on FIELD_DEFINITION
 
-"""recipe """
-type Recipe {
-  id: ID!
-  description: String
-  creationDate: Date!
-  ingredients: [String!]!
-}
-
 """Date custom scalar type"""
 scalar Date
-
-type Query {
-  recipe(id: String!): Recipe!
-  recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
-}
 
 type Mutation {
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
@@ -26,8 +13,21 @@ type Mutation {
 }
 
 input NewRecipeInput {
-  title: String!
   description: String
+  ingredients: [String!]!
+  title: String!
+}
+
+type Query {
+  recipe(id: String!): Recipe!
+  recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
+}
+
+"""recipe """
+type Recipe {
+  creationDate: Date!
+  description: String
+  id: ID!
   ingredients: [String!]!
 }
 

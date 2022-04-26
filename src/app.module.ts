@@ -3,14 +3,31 @@ import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { DirectiveLocation, GraphQLDirective } from 'graphql'
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive'
-import { RecipesModule } from './recipes/recipes.module'
+import { join } from 'path'
+import { ConfigModule } from '@nestjs/config'
+import {
+  ClickHouseConnectionProtocol,
+  ClickHouseModule,
+} from '@depyronick/nestjs-clickhouse'
+import { RecipesModule } from './api/iot/recipes.module'
 
 @Module({
   imports: [
-    RecipesModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    ClickHouseModule.register([
+      {
+        name: process.env.NAME,
+        host: process.env.HOST,
+        port: parseInt(process.env.PORT),
+        username: process.env.USERNAME,
+        database: process.env.DATABASE,
+        protocol: ClickHouseConnectionProtocol.HTTP,
+      },
+    ]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: join(process.cwd(), 'schema.gql'),
+      sortSchema: true,
       transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
@@ -22,6 +39,7 @@ import { RecipesModule } from './recipes/recipes.module'
         ],
       },
     }),
+    RecipesModule,
   ],
 })
 export class AppModule {}
